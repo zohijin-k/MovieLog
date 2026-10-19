@@ -1,0 +1,55 @@
+# 새 폴더 설치·빌드·실행 재현 로그 (2026-10-19 18:15)
+# OS: Version 10.0.26200.9711 (Windows 11 Education) / Node v24.15.0 / npm 11.12.1 / Python 3.12.10
+# 소스: 저장소에서 .gitignore 대상(node_modules, dist, .venv, data, .env)을 제외하고 새 폴더로 복사
+
+## [백엔드] cd backend ; py -m venv .venv
+OK: .venv 생성
+
+## [백엔드] .venv\Scripts\python.exe -m pip install -r requirements.txt
+
+fastapi           0.143.0
+PyJWT             2.15.1
+python-dotenv     1.2.4
+uvicorn           0.54.0
+
+## [백엔드] Copy-Item .env.example .env  →  JWT_SECRET을 새 난수(secrets.token_hex(32))로 교체 (키 값은 기록하지 않음)
+JWT_ISSUER=webservice-class
+JWT_AUDIENCE=board-api
+TOKEN_TTL=90
+DB_FILE=data/board.sqlite
+PORT=8000
+JWT_SECRET=<가림: 64자리 16진수>
+
+## [백엔드] 예시 키 그대로 실행 시 거부되는지 확인
+RuntimeError: JWT_SECRET이 비어 있거나 예시 값입니다. .env에 새 난수 키를 설정하세요.
+
+## [프론트] cd frontend ; npm ci
+added 19 packages, and audited 20 packages in 1s
+found 0 vulnerabilities
+
+## [프론트] npm run build
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 16 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.42 kB │ gzip:  0.31 kB
+dist/assets/index-D0-w6B9V.css    2.06 kB │ gzip:  0.93 kB
+dist/assets/index-CVbn1Fs9.js   228.45 kB │ gzip: 72.02 kB
+✓ built in 134ms
+exit code: 0
+
+## [백엔드 실행] .venv\Scripts\python.exe -m uvicorn app:app --host 127.0.0.1 --port 8001   (기존 8000 서버와 겹치지 않도록 포트만 변경)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+
+## [확인] GET /api/health
+{"status":"ok","stack":"fastapi"}  → HTTP 200
+## [확인] 새 DB 파일 자동 생성: backend/data/board.sqlite
+  12288 bytes  board.sqlite
+## [확인] 빈 DB의 목록: GET /api/posts
+[]  → HTTP 200
+## [확인] 테스트 계정 자동 준비: POST /api/auth/login (alice@class.test)
+{"accessToken":"<TOKEN>","expiresIn":90,"user":{"id":1,"name":"Alice","email":"alice@class.test"}}  → HTTP 200
+## [확인] 테스트 계정 자동 준비: POST /api/auth/login (bob@class.test)
+{"accessToken":"<TOKEN>","expiresIn":90,"user":{"id":2,"name":"Bob","email":"bob@class.test"}}  → HTTP 200

@@ -1,0 +1,30 @@
+브라우저 자동 점검 2026-10-19T07:05:25.938Z  (Edge headless, http://127.0.0.1:4173)
+
+[T02] Alice 로그인
+  → GET /api/posts  [Authorization 헤더 없음]
+  ← 200 /api/posts  [{"id":17,"title":"expiry target","content":"x","authorId":1,"authorName":"Alice","createdAt":"2026-10-19T06:58:47.049658+00:00","updatedAt":"2026-10-19T06:5...
+  → POST /api/auth/login  [Authorization 헤더 없음]
+  ← 200 /api/auth/login  {"accessToken":"<TOKEN>","expiresIn":90,"user":{"id":1,"name":"Alice","email":"alice@class.test"}}
+  화면 사용자 영역: 안녕하세요, Alice님 토큰 유효 시간 약 90초 내 정보 로그아웃
+  안내 메시지: 로그인했습니다.
+  [캡처] T02_screen.png
+
+[T11] 로그인 상태에서 내 정보 → 로그아웃 → 내 정보 조회
+  → GET /api/me  [Authorization: Bearer <TOKEN>]
+  ← 200 /api/me  {"id":1,"name":"Alice","email":"alice@class.test"}
+  안내 메시지: 내 정보: Alice (alice@class.test), ID 1
+  로그아웃 후 사용자 영역: 로그인하지 않은 상태 · 리뷰 읽기만 가능
+  → GET /api/me  [Authorization 헤더 없음]
+  ← 401 /api/me  WWW-Authenticate: Bearer  {"code":"TOKEN_REQUIRED","message":"로그인이 필요합니다."}
+  안내 메시지: 로그인이 필요합니다. 로그인 후 다시 시도하세요.
+  [캡처] T11_screen.png
+
+[T16] 로그인 → 새로고침
+  → POST /api/auth/login  [Authorization 헤더 없음]
+  ← 200 /api/auth/login  {"accessToken":"<TOKEN>","expiresIn":90,"user":{"id":1,"name":"Alice","email":"alice@class.test"}}
+  새로고침 전 사용자 영역: 안녕하세요, Alice님 토큰 유효 시간 약 90초 내 정보 로그아웃 / 리뷰 7개
+  [캡처] T16_before.png
+  → GET /api/posts  [Authorization 헤더 없음]
+  ← 200 /api/posts  [{"id":17,"title":"expiry target","content":"x","authorId":1,"authorName":"Alice","createdAt":"2026-10-19T06:58:47.049658+00:00","updatedAt":"2026-10-19T06:5...
+  새로고침 후 사용자 영역: 로그인하지 않은 상태 · 리뷰 읽기만 가능 / 리뷰 7개
+  [캡처] T16_after.png

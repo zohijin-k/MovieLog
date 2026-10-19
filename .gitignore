@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+target/
+data/
+.env
+.DS_Store
+_unused_templates/
+_*.log

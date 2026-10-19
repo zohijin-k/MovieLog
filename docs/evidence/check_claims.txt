@@ -1,0 +1,21 @@
+# backend/.venv/Scripts/python.exe tools/check_claims.py  (2026-10-12 12:56)
+PASS  정상 토큰(대조군)                 → 200 -
+PASS  HS512 알고리즘                 → 401 INVALID_TOKEN
+PASS  alg=none 서명 없음             → 401 INVALID_TOKEN
+PASS  다른 키로 서명                   → 401 INVALID_TOKEN
+PASS  iss 불일치                    → 401 INVALID_TOKEN
+PASS  aud 불일치                    → 401 INVALID_TOKEN
+PASS  exp 누락                     → 401 INVALID_TOKEN
+PASS  sub 누락                     → 401 INVALID_TOKEN
+PASS  iss 누락                     → 401 INVALID_TOKEN
+PASS  aud 누락                     → 401 INVALID_TOKEN
+PASS  sub가 숫자형(문자열 아님)           → 401 INVALID_TOKEN
+PASS  sub 형식 오류(abc)             → 401 INVALID_TOKEN
+PASS  없는 사용자 sub=999             → 401 INVALID_TOKEN
+PASS  만료된 정상 서명                  → 401 TOKEN_EXPIRED
+PASS  Authorization 헤더 없음        → 401 TOKEN_REQUIRED
+PASS  Bearer 접두사 없음              → 401 TOKEN_REQUIRED
+PASS  Basic 방식                   → 401 TOKEN_REQUIRED
+PASS  Bearer undefined           → 401 INVALID_TOKEN
+
+18/18 passed
