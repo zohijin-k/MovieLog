@@ -11,7 +11,7 @@
 
 ## 보고서와 테스트 증거
 
-- [구현 보고서 PDF](docs/report.pdf)
+- [구현 보고서 PDF](docs/202413123_조이진.pdf)
 - [테스트 증거](docs/evidence/)
   - [`Test/results.md`](docs/evidence/Test/results.md): T07·T08 재조회, T10~T17, 오류 우선순위 검사의 요청별 HTTP 상태·code·헤더 표
   - `Test/T01.png` ~ `Test/T11.png`: T01~T11 요청·응답 캡처(토큰 원문은 가림), `T10.png`는 만료 후 화면 처리
@@ -46,7 +46,7 @@
 │   ├── check_api.py       # 제공된 공통 API 검사 스크립트
 │   └── check_claims.py    # 추가: 클레임 검증 보조 검사
 └── docs/
-    ├── report.pdf
+    ├── 202413123_조이진.pdf
     ├── evidence/
     └── 01~07_*.md         # 과제 제공 문서
 ```
@@ -159,7 +159,7 @@ npm run preview
 - 응답 헤더와 본문: 201에 `Location: /api/posts/{id}`, 보호 API 401에 `WWW-Authenticate: Bearer`, 204는 본문 0바이트.
 - 우선순위: 토큰 없이 없는 글 수정 → 401 TOKEN_REQUIRED, 정상 토큰으로 없는 글 수정 → 404, Bob이 Alice 글에 공백 제목 → 403, Alice가 자기 글에 공백 제목 → 400.
 - 토큰 없음·변조·만료: 각각 401 TOKEN_REQUIRED / INVALID_TOKEN / TOKEN_EXPIRED. HS512·alg=none·다른 키·iss/aud 불일치·exp/sub/iss/aud 누락·없는 사용자도 INVALID_TOKEN.
-- 전체 T01~T17 결과와 증거: [보고서 4절](docs/report.pdf), [docs/evidence/](docs/evidence/)
+- 전체 T01~T17 결과와 증거: [보고서 4절](docs/202413123_조이진.pdf), [docs/evidence/](docs/evidence/)
 
 ## 핵심 구현 설명
 
@@ -174,7 +174,7 @@ npm run preview
 - 도구와 사용 목적: Claude Code (Claude Opus 5.5) — 제공 시작 코드 분석, BE-01~03·FE-01~04 구현, 테스트 스크립트 작성과 실행
 - 반영 위치: `backend/auth.py`, `backend/app.py`, `backend/.env.example`, `frontend/src/api.js`, `frontend/src/main.jsx`, `frontend/src/style.css`, `tools/check_claims.py`, 이 README
 - 직접 수정·검증한 내용: T01~T17을 직접 실행해 HTTP 상태·JSON code·응답 헤더를 확인함(`docs/evidence/Test/results.md`). 테스트 중 T05가 401 TOKEN_EXPIRED로 실패한 원인이 TTL 90초 경과임을 로그인·요청 시각 비교로 확인하고, 테스트 블록마다 토큰을 새로 받도록 절차를 바꿔 재검증함. 자동 검사(check_api 40개, check_claims 18개)를 현재 서버에서 다시 실행해 통과를 확인하고, 실제 파일과 다르던 README 증거 목록을 수정함. GitHub에서 새 폴더로 clone해 README 명령만으로 설치·빌드·실행되는 것을 확인함(2026-10-20).
-- 상세 활용 기록: [보고서 5절](docs/report.pdf)
+- 상세 활용 기록: [보고서 5절](docs/202413123_조이진.pdf)
 - 참고 자료: 과제 제공 문서(`docs/02_API명세.md` 등), PyJWT 사용법 https://pyjwt.readthedocs.io/en/stable/usage.html, FastAPI 문서 https://fastapi.tiangolo.com/
 
 ## 제출 확인
