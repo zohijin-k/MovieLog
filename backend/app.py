@@ -130,11 +130,12 @@ async def create(request: Request):
 
 @app.put("/api/posts/{id}")
 async def update(id: str, request: Request):
-    user_id = current_user_id(request)
-    pid = post_id(id)
-    post = existing(pid)
-    assert_owner(user_id, post["authorId"])
+    user_id = current_user_id(request)       # 인증 (401)
+    pid = post_id(id)                        # ID 형식 (400)
+    post = existing(pid)                     # 글 존재 (404)
+    assert_owner(user_id, post["authorId"])  # 작성자 권한 (403)
     return store.update_post(pid, await fields(request, dict(title=100, content=5000)))
+                                             # 입력 (400) / 변경
 
 
 @app.delete("/api/posts/{id}", status_code=204)

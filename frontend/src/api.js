@@ -39,6 +39,7 @@ export async function request(path, options = {}) {
     throw error;
   }
   const data = await readBody(response);
+  // request() 내부
   if (!response.ok) {
     // FE-03: 401이면 메모리의 로그인 상태를 해제합니다. 403은 로그인 상태를 유지합니다.
     if (response.status === 401) clearSession();

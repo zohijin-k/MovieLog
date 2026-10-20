@@ -42,7 +42,7 @@ AUDIENCE = os.getenv("JWT_AUDIENCE", "board-api")
 
 
 def issue_token(user):
-    # BE-01: 공개 사용자 정보 중 id만 sub로 넣는다. 비밀번호·해시는 넣지 않는다.
+    # BE-01: 공개 사용자 정보 중 id만 sub로 넣는다. 비밀번호, 해시는 넣지 않는다.
     now = datetime.now(timezone.utc)
     claims = dict(
         sub=str(user["id"]),

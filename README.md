@@ -68,8 +68,8 @@
 ### 1 저장소 복제
 
 ```sh
-git clone [저장소 URL]
-cd [저장소 폴더]
+git clone https://github.com/zohijin-k/MovieLog
+cd MovieLog
 ```
 
 ### 2 백엔드 준비와 실행 (터미널 A)
@@ -173,14 +173,14 @@ npm run preview
 - AI 사용 여부: 사용
 - 도구와 사용 목적: Claude Code (Claude Opus 5.5) — 제공 시작 코드 분석, BE-01~03·FE-01~04 구현, 테스트 스크립트 작성과 실행
 - 반영 위치: `backend/auth.py`, `backend/app.py`, `backend/.env.example`, `frontend/src/api.js`, `frontend/src/main.jsx`, `frontend/src/style.css`, `tools/check_claims.py`, 이 README
-- 직접 수정·검증한 내용: [본인이 확인·수정한 내용을 작성]
+- 직접 수정·검증한 내용: T01~T17을 직접 실행해 HTTP 상태·JSON code·응답 헤더를 확인함(`docs/evidence/Test/results.md`). 테스트 중 T05가 401 TOKEN_EXPIRED로 실패한 원인이 TTL 90초 경과임을 로그인·요청 시각 비교로 확인하고, 테스트 블록마다 토큰을 새로 받도록 절차를 바꿔 재검증함. 자동 검사(check_api 40개, check_claims 18개)를 현재 서버에서 다시 실행해 통과를 확인하고, 실제 파일과 다르던 README 증거 목록을 수정함. GitHub에서 새 폴더로 clone해 README 명령만으로 설치·빌드·실행되는 것을 확인함(2026-10-20).
 - 상세 활용 기록: [보고서 5절](docs/report.pdf)
 - 참고 자료: 과제 제공 문서(`docs/02_API명세.md` 등), PyJWT 사용법 https://pyjwt.readthedocs.io/en/stable/usage.html, FastAPI 문서 https://fastapi.tiangolo.com/
 
 ## 제출 확인
 
-- [ ] README의 안내 문구를 실제 내용으로 교체했다.
-- [ ] 새 폴더에 clone하여 README만으로 설치·환경설정·빌드·로컬 실행했다.
+- [x] README의 안내 문구를 실제 내용으로 교체했다.
+- [x] 새 폴더에 clone하여 README만으로 설치·환경설정·빌드·로컬 실행했다.
 - [x] 4173번 빌드 화면에서 API 연결과 전체 필수 기능을 확인했다.
 - [ ] GitHub에서 보고서와 증거 링크가 열린다.
 - [ ] 교수자가 저장소를 열람·복제할 수 있다.
